@@ -25,11 +25,15 @@ public class Path {
     }
     public Path(List<Point> list) {
         this.list = list;
-        tileType = Tiles.getInstance().floor;
+        tileType = Tiles.getInstance().corridorfloor;
+    }
+    public Path(TileType tileType) {
+        this.tileType = tileType;
+        list = new ArrayList<>();
     }
 
     public Path() {
-        tileType = Tiles.getInstance().floor;
+        tileType = Tiles.getInstance().corridorfloor;
         list = new ArrayList<>();
     }
     public int size(){

@@ -14,44 +14,36 @@ import com.example.yulihe.myapplication.utils.map.MapEditor;
 import com.example.yulihe.myapplication.utils.map.circle.elements.CircleDungeon;
 
 public class MainActivity extends AppCompatActivity{
-
     private TextView textView;
-    private ImageView imageView;
+    private static final int MAXSIZE = 12;
+    private int textSize = MAXSIZE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.textView1);
-//        String room = "Dark Fall";
-//        SpannableString ss = new SpannableString("press enter into "+room+" quest.");
-//        ss.setSpan(new NoLineClickSpan(),ss.toString().indexOf(room),ss.toString().indexOf(room)+room.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        textView.setText(ss);
-//        textView.setMovementMethod(LinkMovementMethod.getInstance());
-//        imageView = (ImageView)findViewById(R.id.imageView);
-//        final Avatar avatar = new Avatar(imageView);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                avatar.upDateAvatar();
-//            }
-//        });
-        imageView = (ImageView)findViewById(R.id.imageView);
-        final StringBuilder stringBuilder = new StringBuilder();
-        final MapEditor mapEditor = new MapEditor(MapEditor.SEED);
-        final Dungeon dungeon = new Dungeon();
         final CircleDungeon circleDungeon = new CircleDungeon();
 
-        findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mapEditor.create();
-//                textView.setText(mapEditor.getArrayString());
-//                dungeon.createDungeon(32,32,5000);
-//                textView.setText(dungeon.showDungeon());
                 circleDungeon.createDungeon();
                 String str = circleDungeon.getDisPlay();
                 textView.setText(str);
-                Log.i("test",str);
+
+            }
+        });
+        findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setTextSize(++textSize);
+
+            }
+        });
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.setTextSize(--textSize);
 
             }
         });

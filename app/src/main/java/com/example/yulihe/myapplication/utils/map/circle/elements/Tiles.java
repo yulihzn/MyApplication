@@ -15,8 +15,11 @@ public class Tiles {
     }
 
     public TileType empty;
-    public TileType floor;
-    public TileType wall;
+    public TileType roomfloor;
+    public TileType roomwall;
+    public TileType roomcorner;
+    public TileType corridorwall;
+    public TileType corridorfloor;
     public TileType closedoor;
     public TileType opendoor;
     public TileType upstairs;
@@ -25,13 +28,16 @@ public class Tiles {
 
     private Tiles() {
         empty = getObstacle("　", 0);
-        floor = getPassable("．", 1);
-        wall = getObstacle("＃", 2);
+        roomfloor = getPassable("．", 1);
+        roomwall = getObstacle("＃", 2);
         closedoor = getObstacle("Ｎ", 3);
-        opendoor = getPassable("Ｏ", 4);
+        opendoor = getPassable("ｎ", 4);
         upstairs = getPassable("Ｕ", 5);
         downstairs = getPassable("Ｄ", 6);
         water = getObstacle("～", 7);
+        corridorwall = getObstacle("＊", 8);
+        corridorfloor = getPassable("｀", 9);
+        roomcorner = getObstacle("＄", 10);
     }
 
     private TileType getObstacle(String name, int value) {
@@ -43,5 +49,17 @@ public class Tiles {
     }
     public TileType getTileType(String name,int value){
         return new TileType(name,value,false);
+    }
+
+    public static String ToSBC(String input) {
+        char c[] = input.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == ' ') {
+                c[i] = '\u3000';
+            } else if (c[i] < '\177') {
+                c[i] = (char) (c[i] + 65248);
+            }
+        }
+        return new String(c);
     }
 }
