@@ -7,7 +7,7 @@ package com.example.yulihe.myapplication.utils.map.circle.elements;
 public class Tiles {
     private static Tiles instance;
 
-    public static Tiles getInstance() {
+    public static Tiles tile() {
         if (instance == null) {
             instance = new Tiles();
         }
@@ -25,6 +25,7 @@ public class Tiles {
     public TileType upstairs;
     public TileType downstairs;
     public TileType water;
+    public TileType stone;
 
     private Tiles() {
         empty = getObstacle("　", 0);
@@ -38,6 +39,7 @@ public class Tiles {
         corridorwall = getObstacle("＊", 8);
         corridorfloor = getPassable("｀", 9);
         roomcorner = getObstacle("＄", 10);
+        stone = getPassable("ｏ", 11);
     }
 
     private TileType getObstacle(String name, int value) {

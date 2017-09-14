@@ -47,7 +47,7 @@ public class CircleDungeon {
         maps = new TileType[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                maps[i][j] = Tiles.getInstance().empty;
+                maps[i][j] = Tiles.tile().empty;
             }
         }
         //添加圆路径
@@ -77,7 +77,7 @@ public class CircleDungeon {
         for (Section sec : sections) {
             //修改主圈房间
             if (sec.getIndex() > 0) {
-                sec.updateArea(sec.left + sec.width() / 2, sec.top + sec.height() / 2, Tiles.getInstance().getTileType(Tiles.ToSBC("" + sec.getIndex()), 1));
+                sec.updateArea(sec.left + sec.width() / 2, sec.top + sec.height() / 2, Tiles.tile().getTileType(Tiles.ToSBC("" + sec.getIndex()), 1));
 
             }else{
                 //修改余下房间
@@ -102,14 +102,14 @@ public class CircleDungeon {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                maps[i][j] = Tiles.getInstance().empty;
+                maps[i][j] = Tiles.tile().empty;
             }
         }
 
         putPathIntoMap(mainPathWall);
         putPathIntoMap(mainPath);
         for(Path path : sectionPaths){
-            Path wall = new Path(getPathWallPoints(path),Tiles.getInstance().corridorwall);
+            Path wall = new Path(getPathWallPoints(path),Tiles.tile().corridorwall);
             putPathIntoMap(wall);
             putPathIntoMap(path);
         }
@@ -179,7 +179,7 @@ public class CircleDungeon {
                 break;
             }
             path.getList().add(new Point(tempx,tempy));
-            if(maps[tempx][tempy].getValue() == Tiles.getInstance().roomwall.getValue()){
+            if(maps[tempx][tempy].getValue() == Tiles.tile().roomwall.getValue()){
                 if(count != 0){
                     isPath = true;
                     sec.setExitTileType(path.getList().get(0).x,path.getList().get(0).y);
@@ -192,8 +192,8 @@ public class CircleDungeon {
                 }
             }
             int value = maps[tempx][tempy].getValue();
-            if(value == Tiles.getInstance().roomcorner.getValue()
-                    ||value == Tiles.getInstance().corridorwall.getValue()
+            if(value == Tiles.tile().roomcorner.getValue()
+                    ||value == Tiles.tile().corridorwall.getValue()
                     ){
                 path.getList().remove(path.getList().size()-1);
                 isPath = false;
@@ -219,12 +219,12 @@ public class CircleDungeon {
      */
     private void changeSectionCorner(Section sec,int x,int y){
         if(sec.isCorner(x,y)){
-            sec.updateArea(x, y, Tiles.getInstance().roomfloor);
+            sec.updateArea(x, y, Tiles.tile().roomfloor);
             int offsetX = (x == sec.left)?1:-1;
             int offsetY = (y == sec.top)?1:-1;
             if(sec.getArea()[x-sec.left+offsetX][y-sec.top].isObstacle()&&sec.getArea()[x-sec.left][y-sec.top+offsetY].isObstacle()){
-                sec.getArea()[x-sec.left+offsetX][y-sec.top] = Tiles.getInstance().roomfloor;
-                sec.getArea()[x-sec.left][y-sec.top+offsetY] = Tiles.getInstance().roomfloor;
+                sec.getArea()[x-sec.left+offsetX][y-sec.top] = Tiles.tile().roomfloor;
+                sec.getArea()[x-sec.left][y-sec.top+offsetY] = Tiles.tile().roomfloor;
             }
         }
     }
@@ -236,8 +236,8 @@ public class CircleDungeon {
      * @param r
      */
     private void addCirclePath(int x0, int y0, int r) {
-        mainPath = new Path(MathUtils.getCircleDungeonPoints(x0, y0, r), Tiles.getInstance().corridorfloor);
-        mainPathWall = new Path(getPathWallPoints(mainPath), Tiles.getInstance().corridorwall);
+        mainPath = new Path(MathUtils.getCircleDungeonPoints(x0, y0, r), Tiles.tile().corridorfloor);
+        mainPathWall = new Path(getPathWallPoints(mainPath), Tiles.tile().corridorwall);
     }
     private List<Point> getPathWallPoints(Path main){
         List<Point> walls = new ArrayList<>();
@@ -264,8 +264,8 @@ public class CircleDungeon {
             int x = p.x;
             int y = p.y;
             if (x >= 0 && x < width && y >= 0 && y < height) {
-//                maps[x][y] = Tiles.getInstance().getTileType(Tiles.ToSBC(""+i%10),0);
-//                maps[x][y] = Tiles.getInstance().wall;
+//                maps[x][y] = Tiles.tile().getTileType(Tiles.ToSBC(""+i%10),0);
+//                maps[x][y] = Tiles.tile().wall;
                 maps[x][y] = path.getTileType();
             }
         }

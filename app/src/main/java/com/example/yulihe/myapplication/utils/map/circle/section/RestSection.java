@@ -18,11 +18,11 @@ public class RestSection extends Section {
     public void updateArea() {
         for (int i = 0; i < width(); i++) {
             for (int j = 0; j < height(); j++) {
-                area[i][j] = Tiles.getInstance().roomfloor;
+                area[i][j] = Tiles.tile().roomfloor;
                 if(i==0||j==0||i==width()-1||j==height()-1){
-                    area[i][j] = Tiles.getInstance().roomwall;
+                    area[i][j] = Tiles.tile().roomwall;
                     if(isCorner(i+left,j+top)){
-                        area[i][j] = Tiles.getInstance().roomcorner;
+                        area[i][j] = Tiles.tile().roomcorner;
                     }
                 }
 

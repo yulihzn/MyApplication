@@ -75,7 +75,7 @@ public abstract class Section extends Rect implements Comparable<Section>{
 
     public void setExitTileType(int x,int y){
         exitCount++;
-        updateArea(x,y,Tiles.getInstance().opendoor);
+        updateArea(x,y,Tiles.tile().opendoor);
     }
 
     public int getExitCount() {

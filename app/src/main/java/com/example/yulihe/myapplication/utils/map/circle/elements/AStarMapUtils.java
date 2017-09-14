@@ -30,12 +30,12 @@ public class AStarMapUtils {
             for (int j = 0; j < dungeon.width; j++) {
                 int v = dungeon.getMaps()[j][i].getValue();
                 aStarData[i][j] = 1;
-                if(v == Tiles.getInstance().corridorfloor.getValue()
-                        ||v == Tiles.getInstance().roomfloor.getValue()
-                        ||v == Tiles.getInstance().opendoor.getValue()){
+                if(v == Tiles.tile().corridorfloor.getValue()
+                        ||v == Tiles.tile().roomfloor.getValue()
+                        ||v == Tiles.tile().opendoor.getValue()){
                     aStarData[i][j] = 0;
                 }
-                pathMap[j][i] = Tiles.getInstance().empty.getName();
+                pathMap[j][i] = Tiles.tile().empty.getName();
             }
         }
         aStarMap.loadData(aStarData,1,0);
@@ -85,14 +85,14 @@ public class AStarMapUtils {
         List<AStarNode> list = aStarMap.find();
         for (int j = 0; j < dungeon.height; j++) {
             for (int i = 0; i < dungeon.width; i++) {
-                pathMap[i][j] = Tiles.getInstance().empty.getName();
+                pathMap[i][j] = Tiles.tile().empty.getName();
             }
         }
 
         for(AStarNode node : list){
-            pathMap[node.getX()][node.getY()] = Tiles.getInstance().water.getName();
+            pathMap[node.getX()][node.getY()] = Tiles.tile().stone.getName();
         }
-        pathMap[sx][sy] = Tiles.getInstance().downstairs.getName();
-        pathMap[tx][ty] = Tiles.getInstance().upstairs.getName();
+        pathMap[sx][sy] = Tiles.tile().downstairs.getName();
+        pathMap[tx][ty] = Tiles.tile().upstairs.getName();
     }
 }

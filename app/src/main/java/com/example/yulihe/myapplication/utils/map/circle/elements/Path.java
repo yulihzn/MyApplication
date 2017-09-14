@@ -25,7 +25,7 @@ public class Path {
     }
     public Path(List<Point> list) {
         this.list = list;
-        tileType = Tiles.getInstance().corridorfloor;
+        tileType = Tiles.tile().corridorfloor;
     }
     public Path(TileType tileType) {
         this.tileType = tileType;
@@ -33,7 +33,7 @@ public class Path {
     }
 
     public Path() {
-        tileType = Tiles.getInstance().corridorfloor;
+        tileType = Tiles.tile().corridorfloor;
         list = new ArrayList<>();
     }
     public int size(){
