@@ -28,15 +28,6 @@ public class AStarMap {
 		source = new AStarNode(0, 0);
 		target = new AStarNode(xGridNum - 1, yGridNum - 1);
 	}
-	private int[][]data;
-	
-	public int[][] getData() {
-		return data;
-	}
-
-	public void setData(int[][] data) {
-		this.data = data;
-	}
 
 //	public static void main(String[] args) {
 //		AStarMap asm = new AStarMap(100, 200);

@@ -19,14 +19,15 @@ import java.util.List;
  */
 
 public class CircleDungeon {
-    private int width = 64;
-    private int height = 64;
+    public int width = 64;
+    public int height = 64;
     private TileType[][] maps;
     private List<Section> sections = new ArrayList<>();
     private Path mainPath;
     private Path mainPathWall;
     private List<Path> sectionPaths;
     private List<Path> sectionPathWalls;
+    private int mainSectionsIndex = 0;
 
     public CircleDungeon(int width, int height) {
         this.width = width;
@@ -70,12 +71,13 @@ public class CircleDungeon {
                 }
             }
         }
+        mainSectionsIndex = index-1;
 
         //遍历房间修改属性
         for (Section sec : sections) {
             //修改主圈房间
             if (sec.getIndex() > 0) {
-                sec.updateArea(sec.left + sec.width() / 2, sec.top + sec.height() / 2, Tiles.getInstance().getTileType(Tiles.ToSBC("" + sec.getIndex()), 0));
+                sec.updateArea(sec.left + sec.width() / 2, sec.top + sec.height() / 2, Tiles.getInstance().getTileType(Tiles.ToSBC("" + sec.getIndex()), 1));
 
             }else{
                 //修改余下房间
@@ -262,7 +264,7 @@ public class CircleDungeon {
             int x = p.x;
             int y = p.y;
             if (x >= 0 && x < width && y >= 0 && y < height) {
-//                maps[x][y] = Tiles.getInstance().getTileType("z"+i,0);
+//                maps[x][y] = Tiles.getInstance().getTileType(Tiles.ToSBC(""+i%10),0);
 //                maps[x][y] = Tiles.getInstance().wall;
                 maps[x][y] = path.getTileType();
             }
@@ -302,5 +304,17 @@ public class CircleDungeon {
             stringBuilder.append("\n");
         }
         return stringBuilder.toString();
+    }
+
+    public int getMainSectionsIndex() {
+        return mainSectionsIndex;
+    }
+
+    public TileType[][] getMaps() {
+        return maps;
+    }
+
+    public List<Section> getSections() {
+        return sections;
     }
 }

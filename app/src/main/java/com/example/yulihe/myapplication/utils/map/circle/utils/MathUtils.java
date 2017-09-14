@@ -114,9 +114,7 @@ public class MathUtils {
             } else {
                 d = d + 2 * (x - y) + 5;
                 y--;
-                if(y-1>=x){//防止重复
-                    addEightPoint(eightlist,x0,y0,x,y);
-                }
+                addEightPoint(eightlist,x0,y0,x,y);
             }
             x++;
         }

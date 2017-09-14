@@ -1,0 +1,98 @@
+package com.example.yulihe.myapplication.utils.map.circle.elements;
+
+import android.widget.Toast;
+
+import com.example.yulihe.myapplication.utils.map.AStarMap;
+import com.example.yulihe.myapplication.utils.map.AStarNode;
+import com.example.yulihe.myapplication.utils.map.circle.section.Section;
+
+import java.util.List;
+
+/**
+ * Created by yuli.he on 2017/9/14.
+ */
+
+public class AStarMapUtils {
+    private CircleDungeon dungeon;
+    private AStarMap aStarMap;
+    private String[][] pathMap;
+
+    public AStarMapUtils(CircleDungeon dungeon) {
+        dungeon.createDungeon();
+        this.dungeon = dungeon;
+        upDateMap();
+    }
+    public void upDateMap(){
+        aStarMap = new AStarMap(dungeon.width,dungeon.height);
+        int[][] aStarData = new int[dungeon.height][dungeon.width];
+        pathMap = new String[dungeon.height][dungeon.width];
+        for (int i = 0; i < dungeon.height; i++) {
+            for (int j = 0; j < dungeon.width; j++) {
+                int v = dungeon.getMaps()[j][i].getValue();
+                aStarData[i][j] = 1;
+                if(v == Tiles.getInstance().corridorfloor.getValue()
+                        ||v == Tiles.getInstance().roomfloor.getValue()
+                        ||v == Tiles.getInstance().opendoor.getValue()){
+                    aStarData[i][j] = 0;
+                }
+                pathMap[j][i] = Tiles.getInstance().empty.getName();
+            }
+        }
+        aStarMap.loadData(aStarData,1,0);
+    }
+    public String mapStr(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int j = 0; j < dungeon.height; j++) {
+            for (int i = 0; i < dungeon.width; i++) {
+                stringBuilder.append(Tiles.ToSBC(""+aStarMap.getAStarData()[j][i]));
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+    public String pathStr(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int j = 0; j < dungeon.height; j++) {
+            for (int i = 0; i < dungeon.width; i++) {
+                stringBuilder.append(pathMap[i][j]);
+            }
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
+    public void find(int indexS,int indexT){
+        int sx = 0;
+        int sy = 0;
+        int tx = 0;
+        int ty = 0;
+        for (Section sec : dungeon.getSections()) {
+            if(sec.getIndex() == indexS){
+                sx = sec.left+sec.width()/2;
+                sy = sec.top+sec.height()/2;
+
+            }
+            if(sec.getIndex() == indexT){
+                tx = sec.left+sec.width()/2;
+                ty = sec.top+sec.height()/2;
+            }
+        }
+        if(tx==0||ty==0){
+            return;
+        }
+        aStarMap.setSource(new AStarNode(sx,sy));
+        aStarMap.setTarget(new AStarNode(tx,ty));
+        List<AStarNode> list = aStarMap.find();
+        for (int j = 0; j < dungeon.height; j++) {
+            for (int i = 0; i < dungeon.width; i++) {
+                pathMap[i][j] = Tiles.getInstance().empty.getName();
+            }
+        }
+
+        for(AStarNode node : list){
+            pathMap[node.getX()][node.getY()] = Tiles.getInstance().water.getName();
+        }
+        pathMap[sx][sy] = Tiles.getInstance().downstairs.getName();
+        pathMap[tx][ty] = Tiles.getInstance().upstairs.getName();
+    }
+}
